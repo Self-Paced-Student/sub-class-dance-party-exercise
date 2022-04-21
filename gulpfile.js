@@ -22,8 +22,10 @@ gulp.task('default', function () {
     server: {baseDir: './'}
   });
   gulp.watch([
-    'scripts/dancers.js',
-    'scripts/stage.js',
+    'scripts/dance.js',
+    'scripts/es6.js',
+    'scripts/functional.js',
+    'scripts/pseudoclassical.js',
     'index.html',
     'style.css'
   ]).on('change', browserSync.reload);
