@@ -1,5 +1,9 @@
 
 $(() => {
+  const $stage = $('#stage');
+  const $regularBtn = $('#regular');
+  const $tapperBtn = $('#tapper');
+  const $rainbowBtn = $('#rainbow');
 
   function Dancer (top, left) {
     const dancer = {};
@@ -9,6 +13,18 @@ $(() => {
     // Now that the dancer object has access to its methods,
     // we can set its position to the desired coordinates.
     dancer.setPosition(top, left);
+    return dancer;
+  }
+
+  function Tapper (top, left) {
+    const dancer = Dancer(top, left);
+    window.setInterval(() => dancer.$node.toggleClass('tap-dancer'), 500);
+    return dancer;
+  }
+
+  function Rainbow (top, left) {
+    const dancer = Dancer(top, left);
+    dancer.$node.addClass('rainbow');
     return dancer;
   }
 
@@ -29,7 +45,33 @@ $(() => {
     // the height and width coordinates of a random point on stage,
     // measured as the distance in pixels from its top-left corner.
     // Then use it every time you want to place a new dancer on stage.
-
+    
+    return {
+      height: Math.round($stage.height() * Math.random()),
+      width: Math.round($stage.width() * Math.random())
+    }
   }
+
+  function appendDancer (dancer) {
+    $stage.append(dancer.$node)
+  }
+
+ 
+
+  $regularBtn.click(() => {
+    const { width, height } = randomStagePosition();
+    appendDancer(Dancer(height, width));
+  });
+
+  $tapperBtn.click(() => {
+    const { width, height } = randomStagePosition();
+    appendDancer(Tapper(height, width))
+  })
+
+  $rainbowBtn.click(() => {
+    const { width, height } = randomStagePosition();
+    appendDancer(Rainbow(height, width))
+  })
+
 
 });
